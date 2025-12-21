@@ -92,9 +92,23 @@ public:
         }
     }
     
+    void move_left(int count) {
+        ptr -= count;
+        while (ptr < min_ptr) {
+            expand_tape_left();
+        }
+    }
+    
     void move_right() {
         ptr++;
         if (ptr > max_ptr) {
+            expand_tape_right();
+        }
+    }
+    
+    void move_right(int count) {
+        ptr += count;
+        while (ptr > max_ptr) {
             expand_tape_right();
         }
     }
@@ -214,9 +228,9 @@ int main() {
                 elif op == '-':
                     return f"{self.indent()}tape.get_current() -= {count};"
                 elif op == '>':
-                    return f"{self.indent()}for (int i = 0; i < {count}; i++) tape.move_right();"
+                    return f"{self.indent()}tape.move_right({count});"
                 elif op == '<':
-                    return f"{self.indent()}for (int i = 0; i < {count}; i++) tape.move_left();"
+                    return f"{self.indent()}tape.move_left({count});"
             except ValueError:
                 pass
         
